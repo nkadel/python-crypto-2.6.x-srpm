@@ -38,6 +38,7 @@ SHA), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
 Summary:	Cryptography library for Python 2
 Provides:	pycrypto = %{version}-%{release}
 %{?python_provide:%python_provide python2-crypto}
+Requires:	libtomcrypt >= 1.16
 
 %description -n python%{python2_pkgversion}-crypto
 PyCrypto is a collection of both secure hash functions (such as MD5 and
@@ -48,6 +49,7 @@ This is the Python 2 build of the package.
 %package -n python%{python3_pkgversion}-crypto
 Summary:	Cryptography library for Python 3
 %{?python_provide:%python_provide python%{python3_pkgversion}-crypto}
+Requires:	libtomcrypt >= 1.16
 
 %description -n python%{python3_pkgversion}-crypto
 PyCrypto is a collection of both secure hash functions (such as MD5 and
@@ -126,6 +128,10 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} pct-speedtest3.py
 %{python3_sitearch}/pycrypto-%{version}-py3.*.egg-info
 
 %changelog
+* Mon May 13 2019 Nico Kadel-Garcia <nkadel@gmail.com> - 2.6.1-0
+- Port to RHEL 8
+- Explicitly list Requires for libtomcrypt
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.6.1-25
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
