@@ -5,12 +5,12 @@
 # Assure that sorting is case sensitive
 LANG=C
 
-MOCKS+=epel-8-x86_64
+MOCKS+=samba4repo-8-x86_64
 
 #REPOBASEDIR=/var/www/linux/samba4repo
 REPOBASEDIR:=`/bin/pwd`/../samba4repo
 
-SPEC := samba.spec
+SPEC := python-crypto.spec
 
 all:: $(MOCKS)
 
