@@ -22,6 +22,12 @@ Patch2:		pycrypto-2.6.1-CVE-2013-7459.patch
 Patch3:		pycrypto-2.6.1-unbundle-libtomcrypt.patch
 Patch4:		python-crypto-2.6.1-link.patch
 Patch5:		pycrypto-2.6.1-CVE-2018-6594.patch
+
+%if (0%{?rhel} > 0 && 0%{?rhel} <= 7)
+# Addresses python36- versus python3- dependencies
+BuildRequires: epel-rpm-macros
+%endif
+
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	gcc
