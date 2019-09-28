@@ -1,12 +1,6 @@
 # Share docs between python2 and python3 packages
 %global _docdir_fmt %{name}
 
-# Single python3 version in Fedora, python3_pkgversion macro not available
-%{!?python3_pkgversion:%global python3_pkgversion 3}
-
-# For consistency and completeness
-%global python2_pkgversion 2
-
 Summary:	Cryptography library for Python
 Name:		python-crypto
 Version:	2.6.1
@@ -23,7 +17,7 @@ Patch3:		pycrypto-2.6.1-unbundle-libtomcrypt.patch
 Patch4:		python-crypto-2.6.1-link.patch
 Patch5:		pycrypto-2.6.1-CVE-2018-6594.patch
 
-%if (0%{?rhel} > 0 && 0%{?rhel} <= 7)
+%if 0%{?rhel}
 # Addresses python36- versus python3- dependencies
 BuildRequires: epel-rpm-macros
 %endif
@@ -33,21 +27,21 @@ BuildRequires:	findutils
 BuildRequires:	gcc
 BuildRequires:	gmp-devel >= 4.1
 BuildRequires:	libtomcrypt-devel >= 1.16
-BuildRequires:	python%{python2_pkgversion}-devel >= 2.4
-BuildRequires:	python%{python3_pkgversion}-devel
 BuildRequires:	%{_bindir}/2to3
 
 %description
 PyCrypto is a collection of both secure hash functions (such as MD5 and
 SHA), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
 
-%package -n python%{python2_pkgversion}-crypto
+%package -n python2-crypto
 Summary:	Cryptography library for Python 2
 Provides:	pycrypto = %{version}-%{release}
-%{?python_provide:%python_provide python2-crypto}
+BuildRequires:	python2
+BuildRequires:	python2-devel >= 2.4
 Requires:	libtomcrypt >= 1.16
+%{?python_provide:%python_provide python2-crypto}
 
-%description -n python%{python2_pkgversion}-crypto
+%description -n python2-crypto
 PyCrypto is a collection of both secure hash functions (such as MD5 and
 SHA), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
 
@@ -55,8 +49,10 @@ This is the Python 2 build of the package.
 
 %package -n python%{python3_pkgversion}-crypto
 Summary:	Cryptography library for Python 3
-%{?python_provide:%python_provide python%{python3_pkgversion}-crypto}
+BuildRequires:	python%{python3_pkgversion}
+BuildRequires:	python%{python3_pkgversion}-devel
 Requires:	libtomcrypt >= 1.16
+%{?python_provide:%python_provide python%{python3_pkgversion}-crypto}
 
 %description -n python%{python3_pkgversion}-crypto
 PyCrypto is a collection of both secure hash functions (such as MD5 and
@@ -122,7 +118,7 @@ find %{buildroot}%{python3_sitearch} -name '*.so' -exec chmod -c g-w {} \;
 PYTHONPATH=%{buildroot}%{python2_sitearch} %{__python2} pct-speedtest.py
 PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} pct-speedtest3.py
 
-%files -n python%{python2_pkgversion}-crypto
+%files -n python2-crypto
 %license COPYRIGHT LEGAL/
 %doc README TODO ACKS ChangeLog Doc/
 %{python2_sitearch}/Crypto/
