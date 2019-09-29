@@ -65,7 +65,7 @@ install:: $(MOCKS)
 	    createrepo -q $$rpmdir/.; \
 	done
 	@for repo in $(MOCKCFGS); do \
-	    echo "Touching $(PWD)/../$$repo.cfg to clear cache"; \
+	    echo "Touching $(PWD)/../$$repo.cfg"; \
 	    /bin/touch --no-dereference $(PWD)/../$$repo.cfg; \
 	done
 
