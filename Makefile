@@ -7,7 +7,7 @@ LANG=C
 
 MOCKS+=samba4repo-8-x86_64
 
-MOCKCFGS+=samba4repo-8-x86_64
+MOCKCFGS+=$(MOCKS)
 
 #REPOBASEDIR=/var/www/linux/samba4repo
 REPOBASEDIR:=`/bin/pwd`/../samba4repo
