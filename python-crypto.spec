@@ -5,7 +5,7 @@ Summary:	Cryptography library for Python
 Name:		python-crypto
 Version:	2.6.1
 #Release:	25%%{?dist}
-Release:	0%{?dist}
+Release:	0.1%{?dist}
 # Mostly Public Domain apart from parts of HMAC.py and setup.py, which are Python
 License:	Public Domain and Python
 URL:		http://www.pycrypto.org/
@@ -16,11 +16,6 @@ Patch2:		pycrypto-2.6.1-CVE-2013-7459.patch
 Patch3:		pycrypto-2.6.1-unbundle-libtomcrypt.patch
 Patch4:		python-crypto-2.6.1-link.patch
 Patch5:		pycrypto-2.6.1-CVE-2018-6594.patch
-
-%if 0%{?rhel}
-# Addresses python36- versus python3- dependencies
-BuildRequires: epel-rpm-macros
-%endif
 
 BuildRequires:	coreutils
 BuildRequires:	findutils
@@ -47,14 +42,14 @@ SHA), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
 
 This is the Python 2 build of the package.
 
-%package -n python%{python3_pkgversion}-crypto
+%package -n python3-crypto
 Summary:	Cryptography library for Python 3
-BuildRequires:	python%{python3_pkgversion}
-BuildRequires:	python%{python3_pkgversion}-devel
+BuildRequires:	python3
+BuildRequires:	python3-devel
 Requires:	libtomcrypt >= 1.16
-%{?python_provide:%python_provide python%{python3_pkgversion}-crypto}
+%{?python_provide:%python_provide python3-crypto}
 
-%description -n python%{python3_pkgversion}-crypto
+%description -n python3-crypto
 PyCrypto is a collection of both secure hash functions (such as MD5 and
 SHA), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
 
@@ -124,13 +119,17 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} pct-speedtest3.py
 %{python2_sitearch}/Crypto/
 %{python2_sitearch}/pycrypto-%{version}-py2.*.egg-info
 
-%files -n python%{python3_pkgversion}-crypto
+%files -n python3-crypto
 %license COPYRIGHT LEGAL/
 %doc README TODO ACKS ChangeLog Doc/
 %{python3_sitearch}/Crypto/
 %{python3_sitearch}/pycrypto-%{version}-py3.*.egg-info
 
 %changelog
+* Sat Sep 5 2020 Nico Kadel-Garcia <nkadel@gmail.com> - 2.6.1-0.1
+- Discard BuildRequires for epel-rpm-macros
+- Discard python3_pkgversion in favor of 3
+
 * Mon May 13 2019 Nico Kadel-Garcia <nkadel@gmail.com> - 2.6.1-0
 - Port to RHEL 8
 - Explicitly list Requires for libtomcrypt
